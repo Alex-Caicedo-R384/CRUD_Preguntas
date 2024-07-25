@@ -44,14 +44,14 @@ namespace CRUD_Preguntas.Controllers
 
 
         [HttpGet]
-        public IActionResult Editar(int? PreguntaID)
+        public IActionResult Editar(int? id)
         {
-            if (PreguntaID == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var pregunta = _contexto.Preguntas.Find(PreguntaID);
+            var pregunta = _contexto.Preguntas.Find(id);
             if (pregunta == null)
             {
                 return NotFound();
@@ -75,14 +75,14 @@ namespace CRUD_Preguntas.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detalle(int? PreguntaID)
+        public IActionResult Detalle(int? id)
         {
-            if (PreguntaID == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var pregunta = _contexto.Preguntas.Find(PreguntaID);
+            var pregunta = _contexto.Preguntas.Find(id);
             if (pregunta == null)
             {
                 return NotFound();
@@ -92,14 +92,14 @@ namespace CRUD_Preguntas.Controllers
         }
 
         [HttpGet]
-        public IActionResult Borrar(int? PreguntaID)
+        public IActionResult Borrar(int? id)
         {
-            if (PreguntaID == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var pregunta = _contexto.Preguntas.Find(PreguntaID);
+            var pregunta = _contexto.Preguntas.Find(id);
             if (pregunta == null)
             {
                 return NotFound();
@@ -110,9 +110,9 @@ namespace CRUD_Preguntas.Controllers
 
         [HttpPost, ActionName("Borrar")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BorrarContacto(int? PreguntaID)
+        public async Task<IActionResult> BorrarContacto(int? id)
         {
-            var pregunta = await _contexto.Preguntas.FindAsync(PreguntaID);
+            var pregunta = await _contexto.Preguntas.FindAsync(id);
             if (pregunta == null)
             {
                 return View();

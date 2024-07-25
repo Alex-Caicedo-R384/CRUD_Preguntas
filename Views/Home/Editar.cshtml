@@ -1,5 +1,188 @@
 ﻿@model CRUD_Preguntas.Models.Preguntas
 
 @{
-
+    ViewData["Title"] = "Editar Pregunta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border">
+            <div class="card-header bg-dark">
+                <h3 class="text-white"><strong>Editar Pregunta</strong></h3>
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Editar">
+
+                    <input type="hidden" asp-for="PreguntaID" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="TextoPregunta" class="control-label"></label>
+                        <input asp-for="TextoPregunta" class="form-control" placeholder="Ingresa la pregunta" />
+                        <span asp-validation-for="TextoPregunta" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Correcta" class="control-label"></label>
+                        <input asp-for="Correcta" class="form-control" placeholder="Ingresa la respuesta correcta" />
+                        <span asp-validation-for="Correcta" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Incorrecta1" class="control-label"></label>
+                        <input asp-for="Incorrecta1" class="form-control" placeholder="Ingresa la respuesta incorrecta #1" />
+                        <span asp-validation-for="Incorrecta1" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Incorrecta2" class="control-label"></label>
+                        <input asp-for="Incorrecta2" class="form-control" placeholder="Ingresa la respuesta incorrecta #2" />
+                        <span asp-validation-for="Incorrecta2" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Incorrecta3" class="control-label"></label>
+                        <input asp-for="Incorrecta3" class="form-control" placeholder="Ingresa la respuesta incorrecta #3" />
+                        <span asp-validation-for="Incorrecta3" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-3 text-center">
+                        <button type="submit" class="btn btn-custom"><i class="fa fa-user" aria-hidden="true"></i> Editar Pregunta</button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const preguntaField = document.querySelector('input[name="TextoPregunta"]');
+
+        function formatQuestion(value) {
+            let formattedValue = value.trim();
+            if (formattedValue && !formattedValue.startsWith('¿')) {
+                formattedValue = '¿' + formattedValue;
+            }
+            if (formattedValue && !formattedValue.endsWith('?')) {
+                formattedValue = formattedValue + '?';
+            }
+            return formattedValue;
+        }
+
+        function validateAndFormat() {
+            preguntaField.value = formatQuestion(preguntaField.value);
+        }
+
+        preguntaField.addEventListener('blur', function () {
+            validateAndFormat();
+        });
+
+        document.querySelector('form').addEventListener('submit', function (event) {
+            const formattedValue = formatQuestion(preguntaField.value);
+            if (formattedValue !== preguntaField.value) {
+                preguntaField.value = formattedValue;
+                event.preventDefault();
+                alert('La pregunta debe comenzar con "¿" y terminar con "?"');
+            }
+        });
+    });
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const inputs = $('input');
+        const submitButton = $('button[type="submit"]');
+
+        function checkInputs() {
+            let allFilled = true;
+            inputs.each(function () {
+                if ($(this).val() === '') {
+                    allFilled = false;
+                    return false;
+                }
+            });
+
+            if (allFilled) {
+                submitButton.prop('disabled', false);
+            } else {
+                submitButton.prop('disabled', true);
+            }
+        }
+
+        inputs.on('input', checkInputs);
+        checkInputs();
+    });
+</script>
+
+<style>
+    .btn-custom {
+        background-color: #c9ada7;
+        color: #000;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-right: 5px;
+    }
+
+        .btn-custom:hover {
+            background-color: #ac8178;
+            color: #000;
+        }
+
+    .card {
+        margin-bottom: 20px;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+
+    .card-header {
+        background-color: #343a40;
+        color: #c9ada7;
+        font-weight: bold;
+    }
+
+    .card-body {
+        background-color: #333333;
+        color: #c9ada7;
+        font-weight: normal;
+        padding: 15px;
+    }
+
+    .form-control {
+        background-color: #d9d9d9;
+        color: #000;
+        border: 1px solid #ac8178;
+    }
+
+        .form-control:focus {
+            background-color: #d9d9d9;
+            color: #000;
+            border-color: #ac8178;
+            box-shadow: none;
+        }
+
+    body {
+        background-color: #d9d9d9;
+        color: #000;
+    }
+
+    a.btn-secondary {
+        background-color: #343a40;
+        color: #c9ada7;
+        border-color: #343a40;
+    }
+
+        a.btn-secondary:hover {
+            background-color: #ac8178;
+            color: #000;
+            border-color: #ac8178;
+        }
+</style>
