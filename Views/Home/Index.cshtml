@@ -1,0 +1,236 @@
+﻿@model IEnumerable<CRUD_Preguntas.Models.Preguntas>
+@{
+    ViewData["Title"] = "Lista de Preguntas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="offset-9 col-3 mb-3">
+        <a asp-action="Crear" asp-controller="Home" class="btn btn-custom d-block mx-auto btn-lg">
+            <i class="fa fa-plus" aria-hidden="true"></i> Nueva Pregunta
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="offset-12">
+        <div class="card border">
+            <div class="card-header bg-dark">
+                <h3 class="text-white"><strong>Lista de Preguntas</strong></h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Count() > 0)
+                {
+                    <table class="table table-bordered" id="tblPreguntas" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(p => p.PreguntaID)</th>
+                                <th>@Html.DisplayNameFor(p => p.TextoPregunta)</th>
+                                <th>@Html.DisplayNameFor(p => p.Correcta)</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(m => item.PreguntaID)</td>
+                                    <td>@Html.DisplayFor(m => item.TextoPregunta)</td>
+                                    <td>@Html.DisplayFor(m => item.Correcta)</td>
+                                    <td>
+                                        <div class="btn-group custom-btn-group">
+                                            <a class="btn btn-warning d-inline-block" asp-action="Editar" asp-route-id="@item.PreguntaID">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+                                            </a>
+                                            <a class="btn btn-secondary d-inline-block" asp-action="Detalle" asp-route-id="@item.PreguntaID">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i> Detalle
+                                            </a>
+                                            <a class="btn btn-danger d-inline-block" asp-action="Borrar" asp-route-id="@item.PreguntaID">
+                                                <i class="fa fa-eraser" aria-hidden="true"></i> Borrar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No hay registros</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tblPreguntas').DataTable({
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+<style>
+    .custom-btn-group .btn {
+        margin-right: 8px; /* Ajusta la distancia entre los botones */
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Transiciones suaves para el hover */
+        border: 2px solid transparent; /* Borde inicial transparente */
+        border-radius: 4px; /* Radio de borde para los botones */
+    }
+
+    .custom-btn-group .btn:last-child {
+        margin-right: 0; /* Quita el margen derecho del último botón */
+    }
+
+    .custom-btn-group .btn-warning {
+        background-color: #fab243;
+        color: #333;
+        border-color: #fab243; /* Borde del mismo color que el fondo */
+    }
+
+    .custom-btn-group .btn-warning:hover {
+            background-color: #333;
+            color: #fab243;
+            border-color: #fab243; /* Borde del mismo color que el fondo en hover */
+    }
+
+    .custom-btn-group .btn-secondary {
+        background-color: #df5d2e;
+        color: #000;
+        border-color: #df5d2e; /* Borde del mismo color que el fondo */
+    }
+
+    .custom-btn-group .btn-secondary:hover {
+            background-color: #333;
+            color: #df5d2e;
+            border-color: #df5d2e; /* Borde del mismo color que el fondo en hover */
+    }
+
+    .custom-btn-group .btn-danger {
+        background-color: #b42529;
+        color: #000;
+        border-color: #b42529; /* Borde del mismo color que el fondo */
+    }
+
+    .custom-btn-group .btn-danger:hover {
+        background-color: #333;
+        color: #b42529;
+        border-color: #b42529; /* Borde del mismo color que el fondo en hover */
+    }
+</style>
+
+<style>
+    .btn-custom {
+        background-color: #c9ada7;
+        color: #000;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-right: 5px;
+    }
+
+        .btn-custom:hover {
+            background-color: #ac8178;
+            color: #000;
+        }
+
+    body {
+        background-color: #d9d9d9;
+    }
+
+    .table {
+        background-color: #333333;
+        font-size: 16px;
+    }
+
+        .table th, .table td {
+            background-color: #515151;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table th {
+            background-color: #000;
+            color: #c9ada7;
+        }
+
+        .table tbody tr.table-success {
+            background-color: #CAAD91;
+        }
+
+        .table tbody tr {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+    .table-success td {
+        background-color: #c9ada7;
+    }
+
+    .card-body {
+        background-color: #333333;
+    }
+
+    tr {
+        background-color: #343a40;
+    }
+
+    #tblPreguntas {
+        border: 1px solid #333333;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+        #tblPreguntas th, #tblPreguntas td {
+            border-width: 0.1px;
+        }
+
+        #tblPreguntas th {
+            border-style: outset;
+            border-color: #546565;
+            text-align: center;
+        }
+
+        #tblPreguntas td {
+            border-style: inset;
+            border-color: #c9ada7;
+        }
+
+    #tblPreguntas_wrapper .dataTables_info,
+    #tblPreguntas_wrapper .dataTables_paginate .paginate_button,
+    #tblPreguntas_wrapper .dataTables_filter label,
+    #tblPreguntas_wrapper .dataTables_empty,
+    #tblPreguntas_wrapper .dataTables_length label {
+        color: #c9ada7;
+    }
+
+    #tblPreguntas_wrapper .dataTables_filter input[type="search"] {
+        color: #c9ada7;
+        background-color: #0000;
+        border: 0.1px solid #c9ada7;
+        margin-bottom: 5px;
+    }
+</style>
